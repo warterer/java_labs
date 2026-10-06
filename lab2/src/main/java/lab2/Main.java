@@ -1,3 +1,5 @@
+package lab2;
+
 import com.google.gson.Gson;
 
 public class Main {

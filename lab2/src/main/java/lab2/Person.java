@@ -1,3 +1,5 @@
+package lab2;
+
 import java.util.Objects;
 
 public final class Person {
