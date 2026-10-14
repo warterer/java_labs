@@ -5,29 +5,20 @@ import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-        PeriodCard period = new PeriodCard("P-001", Category.STUDENT, PeriodType.TEN_DAYS, LocalDate.of(2026, 10, 1));
-        System.out.println(period + " діє до " + period.getValidUntil());
-        System.out.println("10 жовтня: " + period.tryPass(LocalDate.of(2026, 10, 10)).getMessage());
-        System.out.println("11 жовтня: " + period.tryPass(LocalDate.of(2026, 10, 11)).getMessage());
+        CardRegistry registry = new CardRegistry();
 
-        TripCard trips = new TripCard("T-001", Category.PUPIL, TripPack.FIVE);
-        System.out.println(trips);
-        for (int i = 1; i <= 6; i++) {
-            AccessResult r = trips.tryPass(LocalDate.now());
-            System.out.println("Поїздка " + i + ": " + r.getMessage() + " (залишилось " + trips.getRemainingTrips() + ")");
-        }
+        registry.issuePeriodCard(Category.STUDENT, PeriodType.MONTH, LocalDate.of(2026, 10, 1));
+        Card trip = registry.issueTripCard(Category.PUPIL, TripPack.TEN);
+        AccumulativeCard acc = registry.issueAccumulativeCard(new BigDecimal("50"));
 
-        AccumulativeCard acc = new AccumulativeCard("A-001", Category.REGULAR);
-        acc.topUp(new BigDecimal("20.00"));
-        for (int i = 1; i <= 3; i++) {
-            AccessResult r = acc.tryPass(LocalDate.now());
-            System.out.println("Накопичувальна, проїзд " + i + ": " + r.getMessage() + ", баланс " + acc.getBalance());
-        }
+        System.out.println("Видано карток: " + registry.size());
+        registry.getAll().forEach(card -> System.out.println("  " + card));
 
-        try {
-            new AccumulativeCard("A-002", Category.STUDENT);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Помилка: " + e.getMessage());
-        }
+        System.out.println("Пошук P-0001: " + registry.find("P-0001").map(Card::toString).orElse("не знайдено"));
+        System.out.println("Пошук X-9999: " + registry.find("X-9999").map(Card::toString).orElse("не знайдено"));
+        System.out.println("Картка " + trip.getId() + " у реєстрі: " + registry.isRegistered(trip));
+        System.out.println("Підроблена картка T-0002 у реєстрі: "
+                + registry.isRegistered(new TripCard("T-0002", Category.PUPIL, TripPack.TEN)));
+        System.out.println("Баланс " + acc.getId() + ": " + acc.getBalance());
     }
 }
