@@ -31,4 +31,9 @@ public class TripCard extends Card {
         remainingTrips--;
         return AccessResult.ALLOWED;
     }
+
+    @Override
+    public String getDetails() {
+        return "залишилось поїздок: " + remainingTrips;
+    }
 }

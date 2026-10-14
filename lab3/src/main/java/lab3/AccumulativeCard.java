@@ -43,4 +43,9 @@ public class AccumulativeCard extends Card {
         balance = balance.subtract(FARE);
         return AccessResult.ALLOWED;
     }
+
+    @Override
+    public String getDetails() {
+        return "баланс: " + balance;
+    }
 }

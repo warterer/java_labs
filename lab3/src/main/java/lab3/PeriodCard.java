@@ -36,4 +36,9 @@ public class PeriodCard extends Card {
         }
         return AccessResult.ALLOWED;
     }
+
+    @Override
+    public String getDetails() {
+        return "діє до: " + validUntil;
+    }
 }

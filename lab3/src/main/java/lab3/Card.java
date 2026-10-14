@@ -28,6 +28,8 @@ public abstract class Card {
 
     public abstract AccessResult tryPass(LocalDate today);
 
+    public abstract String getDetails();
+
     @Override
     public String toString() {
         return getTypeName() + " [" + id + "]";
