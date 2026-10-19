@@ -18,7 +18,7 @@ public class Main {
 
         registry.issuePeriodCard(Category.STUDENT, PeriodType.MONTH, LocalDate.now());
         registry.issueTripCard(Category.PUPIL, TripPack.FIVE);
-        registry.issueAccumulativeCard(new BigDecimal("30.00"));
+        registry.issueAccumulativeCard(new BigDecimal("100.00"));
 
         try (Scanner in = new Scanner(System.in)) {
             new ConsoleMenu(registry, turnstile, in).run();
