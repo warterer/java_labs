@@ -1,4 +1,9 @@
-package lab3;
+package lab3.ui;
+
+import lab3.model.*;
+import lab3.service.CardRegistry;
+import lab3.service.PassStats;
+import lab3.service.Turnstile;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -9,12 +14,12 @@ import java.util.function.Function;
 
 public class ConsoleMenu {
     private final CardRegistry registry;
-    private final Tourniquet Tourniquet;
+    private final Turnstile Turnstile;
     private final Scanner in;
 
-    public ConsoleMenu(CardRegistry registry, Tourniquet Tourniquet, Scanner in) {
+    public ConsoleMenu(CardRegistry registry, Turnstile Turnstile, Scanner in) {
         this.registry = registry;
-        this.Tourniquet = Tourniquet;
+        this.Turnstile = Turnstile;
         this.in = in;
     }
 
@@ -68,7 +73,7 @@ public class ConsoleMenu {
         String id = in.nextLine().trim();
         Card card = registry.find(id).orElse(null);
 
-        AccessResult result = Tourniquet.check(card);
+        AccessResult result = Turnstile.check(card);
         if (result.isAllowed()) {
             System.out.println("[OK] " + result.getMessage() + " (" + card.getDetails() + ")");
         } else {
@@ -104,7 +109,7 @@ public class ConsoleMenu {
     }
 
     private void showStatistics() {
-        PassStats total = Tourniquet.getTotalStats();
+        PassStats total = Turnstile.getTotalStats();
         if (total.total() == 0) {
             System.out.println("Проходів ще не було.");
             return;
@@ -112,14 +117,14 @@ public class ConsoleMenu {
         System.out.println("Разом: дозволів " + total.allowed() + ", відмов " + total.denied());
 
         System.out.println("За типами карток:");
-        for (Map.Entry<String, PassStats> e : Tourniquet.getStatsByType().entrySet()) {
+        for (Map.Entry<String, PassStats> e : Turnstile.getStatsByType().entrySet()) {
             System.out.println("  " + e.getKey() + ": дозволів " + e.getValue().allowed()
                     + ", відмов " + e.getValue().denied());
         }
 
-        if (!Tourniquet.getDenialReasons().isEmpty()) {
+        if (!Turnstile.getDenialReasons().isEmpty()) {
             System.out.println("Причини відмов:");
-            for (Map.Entry<AccessResult, Integer> e : Tourniquet.getDenialReasons().entrySet()) {
+            for (Map.Entry<AccessResult, Integer> e : Turnstile.getDenialReasons().entrySet()) {
                 System.out.println("  " + e.getKey().getMessage() + ": " + e.getValue());
             }
         }

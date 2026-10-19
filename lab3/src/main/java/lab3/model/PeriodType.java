@@ -1,4 +1,4 @@
-package lab3;
+package lab3.model;
 
 import java.time.LocalDate;
 

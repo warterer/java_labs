@@ -1,4 +1,4 @@
-package lab3;
+package lab3.service;
 
 public record PassStats(int allowed, int denied) {
     public static final PassStats EMPTY = new PassStats(0, 0);

@@ -1,10 +1,13 @@
-package lab3;
+package lab3.service;
+
+import lab3.model.AccessResult;
+import lab3.model.Card;
 
 import java.time.Clock;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Tourniquet {
+public class Turnstile {
     private static final String UNKNOWN_TYPE = "Невідомий тип";
 
     private final CardRegistry registry;
@@ -14,12 +17,12 @@ public class Tourniquet {
     private final Map<String, PassStats> byType = new TreeMap<>();
     private final Map<AccessResult, Integer> denialReasons = new EnumMap<>(AccessResult.class);
 
-    public Tourniquet(CardRegistry registry, Clock clock) {
+    public Turnstile(CardRegistry registry, Clock clock) {
         this.registry = Objects.requireNonNull(registry, "registry");
         this.clock = Objects.requireNonNull(clock, "clock");
     }
 
-    public Tourniquet(CardRegistry registry) {
+    public Turnstile(CardRegistry registry) {
         this(registry, Clock.systemDefaultZone());
     }
 

@@ -1,4 +1,4 @@
-package lab3;
+package lab3.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

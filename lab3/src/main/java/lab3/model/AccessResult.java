@@ -1,4 +1,4 @@
-package lab3;
+package lab3.model;
 
 public enum AccessResult {
     ALLOWED("Прохід дозволено", true),
